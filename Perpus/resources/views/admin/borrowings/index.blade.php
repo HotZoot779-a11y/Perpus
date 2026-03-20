@@ -24,7 +24,7 @@
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Buku</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal Pinjam</th>
                                 <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Ubah Status</th>
+                                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -51,18 +51,28 @@
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                                        <form action="{{ route('admin.borrowings.update', $borrowing->id) }}" method="POST" class="inline-flex items-center space-x-2">
-                                            @csrf
-                                            @method('PATCH')
-                                            <select name="status" class="text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                                <option value="pending" {{ $borrowing->status === 'pending' ? 'selected' : '' }}>Pending</option>
-                                                <option value="dipinjam" {{ $borrowing->status === 'dipinjam' ? 'selected' : '' }}>Dipinjam</option>
-                                                <option value="kembali" {{ $borrowing->status === 'kembali' ? 'selected' : '' }}>Kembali</option>
-                                            </select>
-                                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-1.5 px-3 rounded shadow-sm transition">
-                                                Simpan
-                                            </button>
-                                        </form>
+                                        <div class="flex items-center justify-center space-x-2">
+                                            <form action="{{ route('admin.borrowings.update', $borrowing->id) }}" method="POST" class="inline-flex items-center space-x-2">
+                                                @csrf
+                                                @method('PATCH')
+                                                <select name="status" class="text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                                    <option value="pending" {{ $borrowing->status === 'pending' ? 'selected' : '' }}>Pending</option>
+                                                    <option value="dipinjam" {{ $borrowing->status === 'dipinjam' ? 'selected' : '' }}>Dipinjam</option>
+                                                    <option value="kembali" {{ $borrowing->status === 'kembali' ? 'selected' : '' }}>Kembali</option>
+                                                </select>
+                                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-1.5 px-3 rounded shadow-sm transition">
+                                                    Simpan
+                                                </button>
+                                            </form>
+                                            
+                                            <form action="{{ route('admin.borrowings.destroy', $borrowing->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus histori peminjaman ini?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-medium py-1.5 px-3 rounded shadow-sm transition">
+                                                    Hapus
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @empty

@@ -58,4 +58,16 @@ class BorrowingController extends Controller
 
         return back()->with('success', 'Status peminjaman berhasil diperbarui.');
     }
+
+    public function destroy(\App\Models\Borrowing $borrowing)
+    {
+        // If deleted before returned, increment the book stock
+        if ($borrowing->status !== 'kembali') {
+            $borrowing->book->increment('stock');
+        }
+
+        $borrowing->delete();
+
+        return back()->with('success', 'Histori peminjaman berhasil dihapus.');
+    }
 }

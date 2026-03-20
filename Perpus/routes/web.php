@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('books', BookController::class);
         Route::get('borrowings', [BorrowingController::class, 'index'])->name('borrowings.index');
         Route::patch('borrowings/{borrowing}', [BorrowingController::class, 'update'])->name('borrowings.update');
+        Route::delete('borrowings/{borrowing}', [BorrowingController::class, 'destroy'])->name('borrowings.destroy');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
