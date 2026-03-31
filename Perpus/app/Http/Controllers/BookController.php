@@ -25,13 +25,20 @@ class BookController extends Controller
             'publisher' => 'required|string|max:255',
             'year' => 'required|integer',
             'stock' => 'required|integer|min:0',
-            'cover_image' => 'nullable|image|max:2048'
+            'description' => 'nullable|string',
+            'genre' => 'nullable|string|max:100',
+            'cover_image' => 'nullable|image|max:2048',
+            'pdf_file' => 'required|mimes:pdf|max:20480'
         ]);
 
-        $data = $request->except('cover_image');
+        $data = $request->except(['cover_image', 'pdf_file']);
 
         if ($request->hasFile('cover_image')) {
-            $data['cover_image'] = $request->file('cover_image')->store('books', 'public');
+            $data['cover_image'] = $request->file('cover_image')->store('books/covers', 'public');
+        }
+
+        if ($request->hasFile('pdf_file')) {
+            $data['pdf_file'] = $request->file('pdf_file')->store('books/pdfs', 'public');
         }
 
         \App\Models\Book::create($data);
@@ -57,16 +64,26 @@ class BookController extends Controller
             'publisher' => 'required|string|max:255',
             'year' => 'required|integer',
             'stock' => 'required|integer|min:0',
-            'cover_image' => 'nullable|image|max:2048'
+            'description' => 'nullable|string',
+            'genre' => 'nullable|string|max:100',
+            'cover_image' => 'nullable|image|max:2048',
+            'pdf_file' => 'nullable|mimes:pdf|max:20480'
         ]);
 
-        $data = $request->except('cover_image');
+        $data = $request->except(['cover_image', 'pdf_file']);
 
         if ($request->hasFile('cover_image')) {
             if ($book->cover_image) {
                 \Illuminate\Support\Facades\Storage::disk('public')->delete($book->cover_image);
             }
-            $data['cover_image'] = $request->file('cover_image')->store('books', 'public');
+            $data['cover_image'] = $request->file('cover_image')->store('books/covers', 'public');
+        }
+
+        if ($request->hasFile('pdf_file')) {
+            if ($book->pdf_file) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($book->pdf_file);
+            }
+            $data['pdf_file'] = $request->file('pdf_file')->store('books/pdfs', 'public');
         }
 
         $book->update($data);
@@ -82,5 +99,13 @@ class BookController extends Controller
         $book->delete();
 
         return redirect()->route('admin.books.index')->with('success', 'Buku berhasil dihapus.');
+    }
+
+    public function read(\App\Models\Book $book)
+    {
+        if (!$book->pdf_file) {
+            return redirect()->back()->with('error', 'Buku ini belum memiliki file E-Book.');
+        }
+        return view('books.read', compact('book'));
     }
 }

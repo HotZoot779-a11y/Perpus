@@ -69,6 +69,44 @@
                             <input type="number" name="stock" id="stock" value="{{ old('stock', $book->stock) }}" required min="0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-gray-50 hover:bg-white transition-colors">
                         </div>
 
+                        <!-- Detail Tambahan (Backdrop) -->
+                        <div class="col-span-1 md:col-span-2 bg-blue-50/50 p-6 rounded-xl border border-blue-100 shadow-inner my-4">
+                            <h4 class="font-semibold text-blue-800 mb-4 flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                Detail Tambahan & E-Book
+                            </h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Genre -->
+                                <div>
+                                    <label for="genre" class="block text-sm font-medium text-gray-700 mb-1">Genre</label>
+                                    <select name="genre" id="genre" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-white">
+                                        <option value="">Pilih Genre</option>
+                                        <option value="Fiksi" {{ old('genre', $book->genre) == 'Fiksi' ? 'selected' : '' }}>Fiksi</option>
+                                        <option value="Non-Fiksi" {{ old('genre', $book->genre) == 'Non-Fiksi' ? 'selected' : '' }}>Non-Fiksi</option>
+                                        <option value="Edukasi" {{ old('genre', $book->genre) == 'Edukasi' ? 'selected' : '' }}>Edukasi</option>
+                                        <option value="Teknologi" {{ old('genre', $book->genre) == 'Teknologi' ? 'selected' : '' }}>Teknologi</option>
+                                        <option value="Sejarah" {{ old('genre', $book->genre) == 'Sejarah' ? 'selected' : '' }}>Sejarah</option>
+                                        <option value="Sastra" {{ old('genre', $book->genre) == 'Sastra' ? 'selected' : '' }}>Sastra</option>
+                                    </select>
+                                </div>
+
+                                <!-- PDF File -->
+                                <div>
+                                    <label for="pdf_file" class="block text-sm font-medium text-gray-700 mb-1">Ganti File E-Book (PDF) <span class="text-xs font-normal text-gray-500">(Opsional)</span></label>
+                                    <input type="file" name="pdf_file" id="pdf_file" accept=".pdf" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 bg-white border border-gray-300 rounded-md shadow-sm">
+                                    @if($book->pdf_file)
+                                    <p class="text-xs text-green-600 mt-1">E-Book saat ini telah tersimpan.</p>
+                                    @endif
+                                </div>
+
+                                <!-- Deskripsi -->
+                                <div class="col-span-1 md:col-span-2">
+                                    <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Deskripsi Lengkap Buku</label>
+                                    <textarea name="description" id="description" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-white">{{ old('description', $book->description) }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Sampul Buku (Ganti) -->
                         <div class="col-span-1 md:col-span-2">
                             <label class="block text-sm font-medium text-gray-700 mb-2">Ganti Sampul (Opsional)</label>
@@ -80,7 +118,7 @@
                                     <div class="flex justify-center text-sm text-gray-600">
                                         <label for="cover_image" class="relative cursor-pointer bg-transparent rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
                                             <span>Pilih file gambar</span>
-                                            <input id="cover_image" name="cover_image" type="file" class="sr-only" accept="image/jpeg,image/png,image/jpg">
+                                            <input id="cover_image" name="cover_image" type="file" class="sr-only" accept="image/jpeg,image/png,image/jpg" onchange="previewImageEdit(event)">
                                         </label>
                                     </div>
                                     <p class="text-xs text-gray-500">Abaikan jika tidak ingin mengganti sampul saat ini.</p>
@@ -100,4 +138,17 @@
             </div>
         </div>
     </div>
+    <script>
+        function previewImageEdit(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imgContainer = document.querySelector('.relative.w-32.h-48');
+                    imgContainer.innerHTML = `<img src="${e.target.result}" class="object-cover w-full h-full" alt="Preview Sampul Baru">`;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
 </x-app-layout>

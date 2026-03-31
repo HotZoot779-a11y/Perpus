@@ -22,9 +22,6 @@
                     <x-nav-link :href="route('admin.books.index')" :active="request()->routeIs('admin.books.*')">
                         {{ __('Kelola Buku') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.borrowings.index')" :active="request()->routeIs('admin.borrowings.*')">
-                        {{ __('Peminjaman') }}
-                    </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -87,9 +84,6 @@
             @if(auth()->user()->role === 'admin')
             <x-responsive-nav-link :href="route('admin.books.index')" :active="request()->routeIs('admin.books.*')">
                 {{ __('Kelola Buku') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin.borrowings.index')" :active="request()->routeIs('admin.borrowings.*')">
-                {{ __('Peminjaman') }}
             </x-responsive-nav-link>
             @endif
         </div>

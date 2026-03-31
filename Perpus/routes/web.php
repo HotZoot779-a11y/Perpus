@@ -11,14 +11,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
-    Route::post('/books/{book}/borrow', [BorrowingController::class, 'store'])->name('borrowing.store');
+    Route::get('/books/{book}/read', [BookController::class, 'read'])->name('books.read');
     
     // Admin routes
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
         Route::resource('books', BookController::class);
-        Route::get('borrowings', [BorrowingController::class, 'index'])->name('borrowings.index');
-        Route::patch('borrowings/{borrowing}', [BorrowingController::class, 'update'])->name('borrowings.update');
-        Route::delete('borrowings/{borrowing}', [BorrowingController::class, 'destroy'])->name('borrowings.destroy');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
