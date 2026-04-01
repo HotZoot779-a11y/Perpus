@@ -16,6 +16,7 @@ Route::middleware('auth')->group(function () {
     // Admin routes
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
         Route::resource('books', BookController::class);
+        Route::resource('users', \App\Http\Controllers\Admin\UserController::class)->except(['show', 'create', 'store', 'edit', 'update']);
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

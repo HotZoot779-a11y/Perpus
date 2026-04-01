@@ -15,12 +15,17 @@
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Katalog') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    @if(auth()->user()->role === 'user')
+                    <x-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
+                        {{ __('Profile') }}
                     </x-nav-link>
+                    @endif
                     @if(auth()->user()->role === 'admin')
                     <x-nav-link :href="route('admin.books.index')" :active="request()->routeIs('admin.books.*')">
                         {{ __('Kelola Buku') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                        {{ __('Kelola User') }}
                     </x-nav-link>
                     @endif
                 </div>
@@ -42,9 +47,7 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
+                        <!-- Authentication -->
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
@@ -78,12 +81,17 @@
             <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
                 {{ __('Katalog') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            @if(auth()->user()->role === 'user')
+            <x-responsive-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
+                {{ __('Profile') }}
             </x-responsive-nav-link>
+            @endif
             @if(auth()->user()->role === 'admin')
             <x-responsive-nav-link :href="route('admin.books.index')" :active="request()->routeIs('admin.books.*')">
                 {{ __('Kelola Buku') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                {{ __('Kelola User') }}
             </x-responsive-nav-link>
             @endif
         </div>
@@ -96,9 +104,7 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
+                <!-- Authentication -->
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">

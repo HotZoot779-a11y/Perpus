@@ -28,10 +28,9 @@ class HomeController extends Controller
         $user = auth()->user();
 
         if ($user->role === 'admin') {
-            $booksCount = \App\Models\Book::count();
-            return view('admin.dashboard', compact('booksCount'));
+            return redirect()->route('admin.books.index');
         }
 
-        return view('dashboard');
+        return redirect()->route('profile.edit');
     }
 }

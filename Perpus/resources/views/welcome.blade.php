@@ -3,8 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Katalog Perpustakaan SMK Insan Global</title>
+    <title>Katalog Perpustakaan Insan Global</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu_book" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
@@ -20,8 +21,8 @@
                 <div class="flex">
                     <div class="shrink-0 flex items-center">
                         <a href="{{ route('home') }}" class="text-2xl font-bold text-blue-600 block flex items-center gap-2">
-                            <span class="material-icons text-3xl">local_library</span>
-                            Perpustakaan SMK Insan Global
+                            <span class="material-icons text-3xl">menu_book</span>
+                            Perpustakaan Insan Global
                         </a>
                     </div>
                 </div>
@@ -41,38 +42,38 @@
 
     <!-- Hero Section (Carousel) -->
     <div class="relative pt-24 pb-16 lg:pt-32 lg:pb-24 overflow-hidden mt-16"
-         x-data="{ 
-            current: 0, 
+         x-data="{
+            current: 0,
             images: [
-                'https://images.unsplash.com/photo-1512820790803-83ca734da794',
-                'https://images.unsplash.com/photo-1541963463532-d68292c34b19',
-                'https://images.unsplash.com/photo-1481627834876-b7833e8f5570'
-            ] 
+                'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'https://images.unsplash.com/photo-1544640808-32ca72ac7f37?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+            ]
          }"
          x-init="setInterval(() => { current = (current + 1) % images.length }, 5000)">
-        
+
         <template x-for="(img, index) in images" :key="index">
-            <div x-show="current === index" 
+            <div x-show="current === index"
                  x-transition.opacity.duration.1000ms
                  class="absolute inset-0 bg-cover bg-center"
                  :style="`background-image: url('${img}?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');`">
             </div>
         </template>
-        
+
         <div class="absolute inset-0 bg-blue-900 opacity-60"></div>
-        
+
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 class="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl mb-6 drop-shadow-lg">
                 Temukan Buku Terbaik <br class="hidden md:inline"/> Untuk Masa Depanmu
             </h1>
             <p class="mt-4 max-w-2xl text-xl text-blue-50 mx-auto mb-10 drop-shadow-md">
-                Akses koleksi buku dan e-book perpustakaan SMK Insan Global secara digital. Mudah, cepat, dan nyaman.
+                Akses koleksi buku dan e-book perpustakaan Insan Global secara digital. Mudah, cepat, dan nyaman.
             </p>
 
             <!-- Search Bar with Genre Filter -->
             <div class="max-w-4xl mx-auto">
                 <form action="{{ route('home') }}" method="GET" class="relative flex flex-col md:flex-row items-center w-full shadow-2xl rounded-lg md:rounded-full bg-white overflow-hidden">
-                    
+
                     <select name="genre" class="h-14 w-full md:w-48 border-0 focus:ring-0 bg-gray-50 text-gray-700 font-medium px-4 border-b md:border-b-0 md:border-r border-gray-200 outline-none cursor-pointer hover:bg-gray-100 transition-colors">
                         <option value="">Semua Genre</option>
                         <option value="Fiksi" {{ request('genre') == 'Fiksi' ? 'selected' : '' }}>Fiksi</option>
@@ -82,7 +83,7 @@
                         <option value="Sejarah" {{ request('genre') == 'Sejarah' ? 'selected' : '' }}>Sejarah</option>
                         <option value="Sastra" {{ request('genre') == 'Sastra' ? 'selected' : '' }}>Sastra</option>
                     </select>
-                    
+
                     <div class="flex-grow h-14 w-full flex items-center">
                         <div class="grid place-items-center h-full w-12 text-gray-400">
                             <span class="material-icons">search</span>
@@ -94,7 +95,7 @@
                         value="{{ request('search') }}"
                         placeholder="Cari judul buku atau penulis..." />
                     </div>
-                    
+
                     <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold h-14 w-full md:w-32 transition-colors flex justify-center items-center">
                         Cari
                     </button>
@@ -127,12 +128,12 @@
                                 <span class="material-icons text-6xl">menu_book</span>
                             </div>
                         @endif
-                        
+
                         <!-- Genre Badge -->
                         @if($book->genre)
                             <div class="absolute top-4 left-4 bg-white/90 backdrop-blur text-blue-800 text-xs font-bold px-3 py-1 rounded-full shadow-sm">{{ $book->genre }}</div>
                         @endif
-                        
+
                         <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
                             <span class="text-white opacity-0 group-hover:opacity-100 bg-blue-600 px-4 py-2 rounded-full font-medium transition-opacity flex items-center gap-2">
                                 <span class="material-icons text-sm">visibility</span> Detail
@@ -166,14 +167,14 @@
             <div x-show="showModal" @click="showModal = false" class="fixed inset-0 transition-opacity" aria-hidden="true" x-transition.opacity>
                 <div class="absolute inset-0 bg-gray-900 opacity-75"></div>
             </div>
-            
+
             <div x-show="showModal" x-transition.scale class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full border border-gray-100">
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-8 sm:pb-6">
                     <!-- Close button -->
                     <button @click="showModal = false" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors">
                         <span class="material-icons">close</span>
                     </button>
-                    
+
                     <div class="sm:flex sm:items-start gap-8">
                         <div class="w-full sm:w-1/3 flex-shrink-0 mb-6 sm:mb-0">
                             <template x-if="activeBook.cover_url">
@@ -193,7 +194,7 @@
                             </div>
                             <h3 class="text-3xl font-extrabold text-gray-900 mb-2 leading-tight" x-text="activeBook.title"></h3>
                             <p class="text-lg font-semibold text-blue-600 mb-6" x-text="activeBook.author"></p>
-                            
+
                             <div class="grid grid-cols-2 gap-4 mb-6 text-sm text-gray-700 bg-gray-50 p-4 rounded-xl border border-gray-100">
                                 <div><span class="text-gray-500 block text-xs uppercase tracking-wider mb-1">Penerbit</span> <strong x-text="activeBook.publisher"></strong></div>
                                 <div><span class="text-gray-500 block text-xs uppercase tracking-wider mb-1">Tahun</span> <strong x-text="activeBook.year"></strong></div>
@@ -224,10 +225,10 @@
     <footer class="bg-gray-900 text-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-2xl font-bold mb-4 flex items-center justify-center gap-2">
-                <span class="material-icons">local_library</span>
-                Perpustakaan SMK Insan Global
+                <span class="material-icons">menu_book</span>
+                Perpustakaan Insan Global
             </h2>
-            <p class="text-gray-400">© {{ date('Y') }} Perpustakaan SMK Insan Global.</p>
+            <p class="text-gray-400">© {{ date('Y') }} Perpustakaan Insan Global.</p>
         </div>
     </footer>
 
