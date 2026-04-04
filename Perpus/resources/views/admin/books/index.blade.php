@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Katalog Buku (Admin)') }}
+            {{ __('Katalog Buku') }}
         </h2>
     </x-slot>
 
@@ -68,7 +68,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-6 py-10 text-center text-gray-500 border-b border-gray-200">Belum ada koleksi buku. Silakan tambah buku baru.</td>
+                                    <td colspan="5" class="px-6 py-10 text-center text-gray-500 border-b border-gray-200"></td>
                                 </tr>
                             @endforelse
                         </tbody>

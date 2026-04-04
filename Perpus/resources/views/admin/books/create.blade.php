@@ -47,13 +47,13 @@
                         <!-- Tahun Terbit -->
                         <div>
                             <label for="year" class="block text-sm font-medium text-gray-700 mb-1">Tahun Terbit <span class="text-red-500">*</span></label>
-                            <input type="number" name="year" id="year" value="{{ old('year') }}" required min="1800" max="{{ date('Y') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-gray-50 hover:bg-white transition-colors">
+                            <input type="text" name="year" id="year" value="{{ old('year') }}" required min="1999" maxlength="4" pattern="\d*" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-gray-50 hover:bg-white transition-colors">
                         </div>
 
                         <!-- Stok -->
                         <div>
                             <label for="stock" class="block text-sm font-medium text-gray-700 mb-1">Jumlah Stok <span class="text-red-500">*</span></label>
-                            <input type="number" name="stock" id="stock" value="{{ old('stock') }}" required min="0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-gray-50 hover:bg-white transition-colors">
+                            <input type="text" name="stock" id="stock" value="{{ old('stock') }}" required min="0" maxlength="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-gray-50 hover:bg-white transition-colors">
                         </div>
 
                         <!-- Detail Tambahan (Backdrop) -->
