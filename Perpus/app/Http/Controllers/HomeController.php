@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -18,19 +19,17 @@ class HomeController extends Controller
         if ($request->filled('genre')) {
             $query->where('genre', $request->genre);
         }
-        $books = $query->paginate(12);
+        $books = $query->withCount('borrowings as borrow_count')->paginate(12);
 
-        return view('welcome', compact('books'));
+        $userBorrowCount = Auth::check() ? Auth::user()->activeBorrowings()->count() : 0;
+
+        return view('welcome', compact('books', 'userBorrowCount'));
     }
 
     public function dashboard()
     {
-        $user = auth()->user();
+        $borrowings = \App\Models\Borrowing::where('user_id', auth()->id())->with('book')->latest()->get();
 
-        if ($user->role === 'admin') {
-            return redirect()->route('admin.books.index');
-        }
-
-        return redirect()->route('profile.edit');
+        return view('dashboard', compact('borrowings'));
     }
 }

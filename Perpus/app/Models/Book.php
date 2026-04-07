@@ -12,4 +12,14 @@ class Book extends Model
     {
         return $this->hasMany(Borrowing::class);
     }
+
+    public function activeBorrowings()
+    {
+        return $this->hasMany(Borrowing::class)->where('status', 'borrowed');
+    }
+
+    public function getActiveBorrowCountAttribute()
+    {
+        return $this->borrowings()->count();
+    }
 }

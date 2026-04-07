@@ -23,8 +23,8 @@ class BookController extends Controller
             'title' => 'required|string|max:255',
             'author' => 'required|string|max:255',
             'publisher' => 'required|string|max:255',
-            'year' => 'required|string|length:4',
-            'stock' => 'required|string|min:0|length:2',
+            'year' => 'required|string|digits:4',
+            'stock' => 'required|string|min:0',
             'description' => 'nullable|string',
             'genre' => 'nullable|string|max:100',
             'cover_image' => 'nullable|image|max:2048',
@@ -62,8 +62,8 @@ class BookController extends Controller
             'title' => 'required|string|max:255',
             'author' => 'required|string|max:255',
             'publisher' => 'required|string|max:255',
-            'year' => 'required|string|length:4',
-            'stock' => 'required|string|min:0|length:2',
+            'year' => 'required|string|digits:4',
+            'stock' => 'required|string|min:0',
             'description' => 'nullable|string',
             'genre' => 'nullable|string|max:100',
             'cover_image' => 'nullable|image|max:2048',
@@ -104,7 +104,7 @@ class BookController extends Controller
     public function read(\App\Models\Book $book)
     {
         if (!$book->pdf_file) {
-            return redirect()->back()->with('error', 'Buku ini belum memiliki file E-Book.');
+            return redirect()->back()->with('error', 'Terjadi kesalahan silahkan hubungi admin.');
         }
         return view('books.read', compact('book'));
     }

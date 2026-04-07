@@ -70,7 +70,7 @@
                 Akses koleksi buku dan e-book perpustakaan Insan Global secara digital. Mudah, cepat, dan nyaman.
             </p>
 
-            <!-- Search Bar with Genre Filter -->
+            <!-- Search Filter -->
             <div class="max-w-4xl mx-auto">
                 <form action="{{ route('home') }}" method="GET" class="relative flex flex-col md:flex-row items-center w-full shadow-2xl rounded-lg md:rounded-full bg-white overflow-hidden">
 
@@ -210,9 +210,30 @@
                     </div>
                 </div>
                 <div class="bg-gray-50 px-6 py-4 sm:flex sm:flex-row-reverse border-t border-gray-100">
-                    <a :href="activeBook.read_url" class="w-full inline-flex justify-center items-center rounded-xl border border-transparent shadow-sm px-8 py-3 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm transition-all transform hover:scale-105">
-                        <span class="material-icons text-sm mr-2">menu_book</span> Baca E-Book
-                    </a>
+
+
+@auth
+                        @if($userBorrowCount >= 2)
+                            <button disabled class="w-full inline-flex justify-center items-center rounded-xl border border-transparent shadow-sm px-8 py-3 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none sm:text-sm transition-all cursor-not-allowed sm:ml-3 sm:w-auto">
+                                <span class="material-icons text-sm mr-2">block</span> Mencapai Batas Maximal
+                            </button>
+                        @else
+                            <form :action="`/books/${activeBook.id}/borrow`" method="POST" class="w-full sm:w-auto sm:ml-3">
+                                @csrf
+                                <button type="submit"
+                                        x-bind:class="parseInt(activeBook.stock || 0) > (activeBook.borrow_count || 0) ? 'bg-blue-600 hover:bg-blue-700 text-white border-transparent transform hover:scale-105' : 'bg-red-600 text-white border-transparent cursor-not-allowed'"
+                                        x-bind:disabled="parseInt(activeBook.stock || 0) <= (activeBook.borrow_count || 0)"
+                                        class="w-full inline-flex justify-center items-center rounded-xl border shadow-sm px-8 py-3 text-base font-medium focus:outline-none sm:text-sm transition-all">
+                                    <span class="material-icons text-sm mr-2" x-text="parseInt(activeBook.stock || 0) > (activeBook.borrow_count || 0) ? 'library_add' : 'error'"></span>
+                                    <span x-text="parseInt(activeBook.stock || 0) > (activeBook.borrow_count || 0) ? 'Pinjam Buku' : 'Stok Habis'"></span>
+                                </button>
+                            </form>
+                        @endif
+                    @else
+                        <a href="{{ route('login') }}" class="w-full inline-flex justify-center items-center rounded-xl border border-transparent shadow-sm px-8 py-3 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm transition-all transform hover:scale-105">
+                            <span class="material-icons text-sm mr-2">login</span> Login untuk Pinjam
+                        </a>
+                    @endauth
                     <button @click="showModal = false" type="button" class="mt-3 w-full inline-flex justify-center items-center rounded-xl border border-gray-300 shadow-sm px-6 py-3 bg-white text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm transition-colors">
                         Tutup
                     </button>

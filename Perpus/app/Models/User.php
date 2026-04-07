@@ -22,7 +22,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role', 
     ];
 
     /**
@@ -51,5 +50,10 @@ class User extends Authenticatable
     public function borrowings()
     {
         return $this->hasMany(Borrowing::class);
+    }
+
+    public function activeBorrowings()
+    {
+        return $this->borrowings()->where('status', 'borrowed');
     }
 }
